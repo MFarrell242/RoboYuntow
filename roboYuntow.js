@@ -1,6 +1,6 @@
 const dotenv = require('dotenv').config();
 const tmi = require('tmi.js');
-const dadJoke = require('./commands/dadJoke');
+const axios = require('axios');
 
 const opts = {
     identity: {
@@ -19,14 +19,20 @@ client.on('connected', onConnectedHandler);
 
 client.connect();
 
-function onMessageHandler(target, context, msg, self) {
+function onMessageHandler(target, context, message, self) {
     if (self) {return;}
 
-    const command = msg.trim();
+    const command = message.trim();
 
     switch (command) {
         case "!joke":
-            dadJoke;
+            // axios.get('https://icanhazdadjoke.com')
+            //     .then(function(response){
+            //         client.say(target, `joke machine broke, sorry`)})
+            //     .catch(function(err) {
+            //         console.log(err);
+            // });
+            client.say(target, "joke machine broke.");
             break;
         case "!credits":
             client.say(target, 'this bot was made by viewer Butts Buttington! PRAISE BE TO BUTTS!');
@@ -39,3 +45,15 @@ function onMessageHandler(target, context, msg, self) {
 function onConnectedHandler(addr, port) {
     console.log(`* connected to ${addr}:${port}`);
 }
+
+// const dadJoke = function(target) {
+//     axios({
+//         method:'get',
+//         url: 'https://icanhazdadjoke.com'
+//     }).then(res => {
+//         client.say(target, res.joke);
+//     }).catch(err=>{
+//         console.log(err);
+//         return('Joke machine broke, sorry!');
+//     });
+// };
