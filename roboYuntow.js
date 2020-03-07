@@ -26,13 +26,16 @@ function onMessageHandler(target, context, message, self) {
 
     switch (command) {
         case "!joke":
-            // axios.get('https://icanhazdadjoke.com')
-            //     .then(function(response){
-            //         client.say(target, `joke machine broke, sorry`)})
-            //     .catch(function(err) {
-            //         console.log(err);
-            // });
-            client.say(target, "joke machine broke.");
+            axios.get('https://icanhazdadjoke.com/slack', {
+                headers: {'User-Agent': 'github.com/MFarrell242/RoboYuntow'},
+                accept: 'application/json'
+            })
+                .then(function(response){
+                    // console.log(response.data.attachments[0].text);
+                    client.say(target, `${response.data.attachments[0].text}`)})
+                .catch(function(err) {
+                    console.log(err);
+            });
             break;
         case "!credits":
             client.say(target, 'this bot was made by viewer Butts Buttington! PRAISE BE TO BUTTS!');
